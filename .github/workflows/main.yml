@@ -23,31 +23,6 @@ jobs:
       - name: Run tests
         run: |
           python manage.py test
-          
-    services:
-
-      
-      postgres:
-        image: postgres:14
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: root
-          POSTGRES_DB: enimi_db
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        
-#     steps:
-#      - uses: actions/checkout@v2
-#      - name: Build and Test
-#        run: |
-#          docker-compose up
-#          docker-compose run --rm web sh -c "python manage.py migrate && python manage.py test"
-
   
   run_pull:
     name: run pull
