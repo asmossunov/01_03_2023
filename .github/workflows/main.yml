@@ -17,11 +17,6 @@ jobs:
           python-version: "3.9"
       - name: Install dependencies
         run: pip install -r requirements.txt
-      - name: Set var
-        run: export DB_NAME=enimi_db
-      - name: Set up database
-        run: |
-          python manage.py migrate --noinput
       - name: Run tests
         run: |
           python manage.py test
