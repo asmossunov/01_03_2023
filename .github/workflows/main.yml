@@ -6,11 +6,10 @@ on:
   workflow_dispatch:
 
 jobs:
-
   run_pull:
     name: run pull
     runs-on: ubuntu-latest
-
+    
     steps:
     - name: install ssh keys
       # check this thread to understand why its needed:
