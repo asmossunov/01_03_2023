@@ -60,15 +60,19 @@
                                         <div id="element"></div>
                                     </div>
                                 </div>
+
                             {% endif %}
+
                         </div>
 
 
 
 
                         {% for status in service_statuses %}
+
                             {% if status.order.pk == order.pk %}
-                                <p>Ваша анкета будет находиться в топе до: <h3>{{ status.end_date|slice:10 }}</h3></p>
+                                <span>Дата и время платежа: <h4>{{ status.start_date }}</h4></span>
+                                <p>Ваша анкета будет находиться в топе до: <h3>{{ status.end_date|date:"d.m.Y" }}</h3></p>
                             {% endif %}
                         {% endfor %}
 

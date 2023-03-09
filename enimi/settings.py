@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 CSRF_TRUSTED_ORIGINS = ['https://enimi.hopto.org']
 
@@ -40,7 +40,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 LOGIN_URL = 'login_page'
 DEFAULT_FROM_EMAIL = 'enemi<no_reply@domain.com>'
 
-ALLOWED_HOSTS = ['192.241.157.30', 'enimi.hopto.org']
+ALLOWED_HOSTS = ['localhost', '192.241.157.30', 'enimi.hopto.org']
 
 # Application definition
 
@@ -67,7 +67,10 @@ INSTALLED_APPS = [
     'api',
     'notifications',
     'payments',
-    'ratings'
+    'ratings',
+    'django_celery_results',
+    'celery',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -137,7 +140,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Almaty'
 
 USE_I18N = True
 
@@ -146,14 +149,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+# REDIS_DB = 0
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+# CELERY_ACCEPT_CONTENT = ['application/json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
+
+
 
 STATIC_URL = "static/"
-#STATICFILES_DIRS = [
-#    BASE_DIR / "static"
-#]
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = '/uploads/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
 
