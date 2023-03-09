@@ -42,7 +42,43 @@ services:
     env_file:
       - ./.env
     restart: always
-      
+  
+
+  redis:
+    image: redis
+    restart: always
+
+  celery:
+    build: .
+    command: celery -A enimi worker --loglevel=info
+    volumes:
+      - ./://app/web
+      - ./logs://app/logs:rw
+    environment:
+      - DJANGO_SETTINGS_MODULE=enimi.settings
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - web
+      - redis
+    restart: always
+
+  celery-beat:
+    build: .
+    command: celery -A enimi beat -l INFO
+    volumes:
+      - ./://app/web
+      - ./logs://app/logs:rw
+    environment:
+      - DJANGO_SETTINGS_MODULE=enimi.settings
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - web
+      - redis
+    restart: always   
+
+    
   nginx:
     image: nginx
     volumes:
