@@ -65,4 +65,3 @@ environ~=1.0
 tzdata~=2022.1
 djangorestframework~=3.14.0
 legacy~=0.1.6
-
